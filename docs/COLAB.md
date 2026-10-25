@@ -24,30 +24,40 @@ external or manual.
 
 ## 1. Get the project into the runtime
 
-Any one of these is fine:
+Open the notebook from GitHub:
 
-**A. Clone from your own Git remote**
+[`notebooks/momentcut_colab.ipynb`](https://github.com/ardyhim/momentcut/blob/main/notebooks/momentcut_colab.ipynb)
+
+The first code cell does the right thing automatically:
+
+- fresh runtime: `git clone --depth 1 https://github.com/ardyhim/momentcut.git /content/momentcut`;
+- existing checkout: `git pull --ff-only`, so code changes are picked up
+  without uploading a project zip again.
+
+The relevant settings are at the top of that cell:
 
 ```python
-!git clone <your-repo-url> /content/clip-generator
+PROJECT_DIR = Path("/content/momentcut")
+REPO_URL = "https://github.com/ardyhim/momentcut.git"
+UPDATE_REPO = True
 ```
 
-**B. Upload a zip of this project**
+Change `REPO_URL` to use a fork. Set `UPDATE_REPO = False` to skip the pull for a
+session. If the code was already imported and you pulled an update, restart the
+runtime before rerunning later cells.
 
-Use the notebook's upload cell; it extracts the zip under `/content`. The
-notebook auto-detects a folder containing `momentcut/`.
-
-**C. Put it on Google Drive**
+**Putting the checkout on Google Drive** is optional:
 
 ```python
 from google.colab import drive
 drive.mount("/content/drive")
-# then set PROJECT_DIR to /content/drive/MyDrive/.../clip-generator
+# then set PROJECT_DIR to /content/drive/MyDrive/momentcut before the clone cell
 ```
 
 Drive is persistent but slower for heavy reads/writes. A good compromise is to
-keep code and `runs/` on Drive for long jobs, or download the important
-artifacts after each stage.
+keep code on `/content` (re-cloned from git in seconds) and put only long-running
+outputs or model caches on Drive. Download important artifacts after each stage
+if you rely on ephemeral `/content`.
 
 ## 2. Install dependencies
 
@@ -102,7 +112,7 @@ python -m momentcut analyze video.mp4 --asr-model /content/models/faster-whisper
 Keep the video, run directory, prompts, and responses in predictable paths:
 
 ```text
-/content/clip-generator/
+/content/momentcut/
   video.mp4
   runs/colab-demo/
     transcript.json
@@ -227,6 +237,27 @@ Use **Runtime > Disconnect and delete runtime** intentionally when you are done,
 or download the artifacts first.
 
 ## 8. Troubleshooting
+
+**`git pull` failed or the notebook says it is continuing with an old checkout**
+
+The checkout has local changes, is on another branch, or the network is
+unavailable. Inspect it with:
+
+```bash
+git -C /content/momentcut status
+git -C /content/momentcut log --oneline -3
+```
+
+Commit/stash your changes, switch back to `main`, or delete
+`/content/momentcut` and rerun the first cell for a fresh shallow clone. The
+notebook deliberately continues with the existing checkout instead of
+destroying local work.
+
+**`/content/momentcut exists but is not a git checkout`**
+
+An earlier manual copy or zip was extracted there. Move it aside, delete it, or
+set `PROJECT_DIR` to a different path before rerunning the first cell. The
+current notebook does not use project zip uploads.
 
 **`TypeError: open() got an unexpected keyword argument 'metadata_errors'`**
 

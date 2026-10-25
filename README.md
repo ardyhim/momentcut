@@ -1,4 +1,6 @@
-﻿# MomentCut
+# MomentCut
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ardyhim/momentcut/blob/main/notebooks/momentcut_colab.ipynb)
 
 Turn long-form spoken video into short clips without trusting an AI model with
 the final cut times.
@@ -156,11 +158,14 @@ Useful options:
 
 ## Google Colab
 
-The intended free-Colab workflow is in
-[`notebooks/momentcut_colab.ipynb`](notebooks/momentcut_colab.ipynb) with setup
-notes in [`docs/COLAB.md`](docs/COLAB.md). It uses only faster-whisper locally;
-the AI step can be manual or API-based. No local LLM or large vision model is
-required.
+Open the notebook above. The first cell clones this public repository to
+`/content/momentcut`; on a later run it uses `git pull --ff-only` to update the
+checkout. There is no project zip to upload. Set `UPDATE_REPO = False` to skip
+the pull or change `REPO_URL` for a fork.
+
+It uses only faster-whisper locally; the AI step can be manual or API-based. No
+local LLM or large vision model is required. Setup notes:
+[`docs/COLAB.md`](docs/COLAB.md).
 
 Important: free Colab has variable GPU availability and can disconnect. The
 pipeline checkpoints ASR chunks, prompts, responses, and renders. Use a Drive
