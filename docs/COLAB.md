@@ -46,6 +46,10 @@ Change `REPO_URL` to use a fork. Set `UPDATE_REPO = False` to skip the pull for 
 session. If the code was already imported and you pulled an update, restart the
 runtime before rerunning later cells.
 
+`git pull` updates the checkout, not the cells already open in the browser.
+Reopen the notebook from GitHub when the notebook file itself changes; a saved
+Colab copy does not follow repository changes automatically.
+
 **Putting the checkout on Google Drive** is optional:
 
 ```python
