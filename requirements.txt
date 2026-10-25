@@ -1,0 +1,8 @@
+# Runtime dependencies for MomentCut.
+#
+# faster-whisper 1.2.1 calls av.open(..., metadata_errors="ignore"). PyAV 19
+# removed that keyword, so the upper bound is required, not cosmetic. Tested
+# with PyAV 16.0.1.
+faster-whisper==1.2.1
+av>=12,<17
+requests>=2.31,<3

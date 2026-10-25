@@ -1,0 +1,33 @@
+# Local virtual environments and runtime artifacts
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.tmp/
+runs/
+/pip-*
+*.log
+
+# Source videos / generated media must not be committed by accident
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.wav
+*.flac
+*.m4a
+
+# Provider secrets
+.env
+.env.local
+
+# Reference checkout used only for investigation
+_reference/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
